@@ -1,48 +1,68 @@
-//Administrator class which stores Customer ArrayList which stores objects of customer type.
-/* @functions : addNewCustomer, enterCarDetails, addNewCarToExistingCustomer,
-showNameSortedDatabase, searchById, generatePrizes*/
+/*Administrator class which stores Customer ArrayList which stores
+ *objects of customer type.
+ * @functions : addNewCustomer : add new customer to Arraylist
+ *              enterCarDetails: will ask for Car type,model price
+ *              addNewCarToExistingCustomer: ask customer id and run enterCarDetails
+ *              showNameSortedDatabase: Show all customers sorted by name
+ *              searchById: Ask for ID and show respecive customer
+ *              generatePrizes: Ask for 3 IDs from Admin and Generate prizes if any id matches
+ */
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Admin 
+public class Admin
 {
-    static ArrayList<Customer> customerArl = new ArrayList<>(); //arrarylist of customer type object
+    //arrarylist of customer type object
+    static ArrayList<Customer> customerArl = new ArrayList<>();
     
-    public int addNewCustomer(Customer c) //Addition of a customer type object into the arraylist
+    //Addition of a customer type object into the arraylist
+    public int addNewCustomer(Customer c)
     {
         customerArl.add(c);
-        c.customerId=customerArl.indexOf(c)+1 ; //assigning value to customer ID
-        return c.customerId; //returning of customer id
+        //assigning value to customer ID
+        c.customerId=customerArl.indexOf(c)+1 ; 
+        //returning of customer id
+        return c.customerId;
     }
     
-    public static void enterCarDetails(int customerId,Customer c) //asking the car details
+    
+    public static void enterCarDetails(int customerId,Customer c)
     {
         System.out.println("Enter Car Type, Model, Price. ");
-        Scanner sc = new Scanner(System.in); //new object of scanner class
-        String carType = ""; //verified Car Type variable
+        Scanner sc = new Scanner(System.in); 
+        //verified Car Type variable
+        String carType = ""; 
         do
         {
-            String carTypeInput = sc.next(); //input for non verified cartype
-            if (carTypeInput.trim().equalsIgnoreCase("toyota") ||carTypeInput.trim().equalsIgnoreCase("hyundai") ||carTypeInput.trim().equalsIgnoreCase("maruti")) //verification of cartype
+            //input for non verified cartype
+            String carTypeInput = sc.next(); 
+            //verification of cartype
+            if (carTypeInput.trim().equalsIgnoreCase("toyota") ||carTypeInput.trim().equalsIgnoreCase("hyundai") ||carTypeInput.trim().equalsIgnoreCase("maruti"))
             {
-                carType = carTypeInput; //assigning the verified value of car type
+                //assigning the verified value of car type
+                carType = carTypeInput;
             }
             else
                 System.out.println("Invalid Type.");
         }
-        while (carType.isEmpty()); //loop to get verified car type
+        //loop to get verified car type
+        while (carType.isEmpty());
         
-        String carModel = sc.next(); //input for car model
+        //input for car model
+        String carModel = sc.next(); 
         
-        float carPrice = 0; //initialize carprice
+        //initialize carprice
+        float carPrice = 0; 
         do 
         {   
-            String carPriceInput = sc.next(); //non verified car price
+            //non verified car price
+            String carPriceInput = sc.next();
             try 
             {
-                carPrice = Float.parseFloat(carPriceInput); //verification of car price and input
+                //verification of car price and input
+                carPrice = Float.parseFloat(carPriceInput); 
             }
             catch (NumberFormatException e) 
             {
@@ -54,18 +74,25 @@ public class Admin
         switch (carType.toLowerCase()) 
         {
             case "toyota":
-                Toyota t = new Toyota(carModel,carPrice,c); //taking input and storing in toyota constructor
-                c.carArl.add(t); //adding the verified details of car in car arraylist
+                //taking input and storing in toyota constructor
+                Toyota t = new Toyota(carModel,carPrice,c);
+                //adding the verified details of car in car arraylist
+                c.carArl.add(t); 
                 break;
                 
             case "maruti":
-                Maruti m = new Maruti(carModel,carPrice,c);  //taking input and storing in maruti constructor
-                c.carArl.add(m); //adding the verified details of car in car arraylist
+                
+                //taking input and storing in maruti constructor
+                Maruti m = new Maruti(carModel,carPrice,c);  
+                //adding the verified details of car in car arraylist
+                c.carArl.add(m); 
                 break;
                 
             case "hyundai":
-                Hyundai h = new Hyundai(carModel,carPrice,c);  //taking input and storing in hyundai constructor
-                c.carArl.add(h); //adding the verified details of car in car arraylist
+                //taking input and storing in hyundai constructor
+                Hyundai h = new Hyundai(carModel,carPrice,c); 
+                //adding the verified details of car in car arraylist
+                c.carArl.add(h); 
                 break;
             
             default:
@@ -73,22 +100,25 @@ public class Admin
         }
     }
 
-    
-    public void addNewCarToExistingCustomer(Customer c, Car car) //adding new car to existing customer
+    //adding new car to existing customer
+    public void addNewCarToExistingCustomer(Customer c, Car car) 
     {
-        customerArl.get (customerArl.indexOf(c)). carArl.add(car); //adding the details of car to the user given customer ID
+        //adding the details of car to the user given customer ID
+        customerArl.get (customerArl.indexOf(c)). carArl.add(car); 
     }   
     
-       
-    
-    public void  showNameSortedDatabase() //show database of customer sorted by name
+    //show database of customer sorted by name
+    public void  showNameSortedDatabase() 
     {
-        customerArl.sort(new NameComparator()); //sorting using name comparator
-          for(Customer c: customerArl) //iterating customer arraylist
+        //sorting using name comparator
+        customerArl.sort(new NameComparator());
+          //iterating customer arraylist
+          for(Customer c: customerArl) 
             {   System.out.println("-------------------");
                 System.out.println("CustomerName: "+c.customerName+ 
                                    "\nCustomer ID: "+ c.customerId);
-                for(Car carObj:c.carArl) //iterating car arraylist
+                //iterating car arraylist
+                for(Car carObj:c.carArl) 
                 {   
     
                     System.out.println( "Car ID:" + carObj.carId +
@@ -101,13 +131,15 @@ public class Admin
             }
     }
     
-    public void searchById(int id) //taking ID as input to search for the respective customer
+    //taking ID as input to search for the respective customer
+    public void searchById(int id)
     {
         if(customerArl.isEmpty()) 
                 System.out.println("No customer added yet.");
         else
-        {    
-            for (int customerArlIndex=0; customerArlIndex<customerArl.size();customerArlIndex++) //check if customer is there
+        {   
+            //check if customer is there
+            for (int customerArlIndex=0; customerArlIndex<customerArl.size();customerArlIndex++) 
             {
                 if (customerArl.get(customerArlIndex).customerId == id ) 
                 {
@@ -131,31 +163,39 @@ public class Admin
         }    
     }
     
-    public void generatePrizes() throws InputMismatchException //generate max. 3 random customer IDs who will get prize
+    //generate max. 3 random customer IDs who will get prize
+    public void generatePrizes() throws InputMismatchException 
     {   
-        System.out.println("\nAdmin must enter 3 Valid IDs. \n"); //admin have to give 3 random IDs
+        //admin have to give 3 random IDs
+        System.out.println("\nAdmin must enter 3 Valid IDs. \n"); 
                     System.out.println("Enter Id 1:\n");
-                    int adminInputId1 = new Scanner(System.in).nextInt(); //input ID 1
+                    //input ID 1
+                    int adminInputId1 = new Scanner(System.in).nextInt(); 
                     
                     System.out.println("Enter Id 2:\n");
-                    int adminInputId2 = new Scanner(System.in).nextInt(); //input ID 2
+                    //input ID 2
+                    int adminInputId2 = new Scanner(System.in).nextInt(); 
                     
                     System.out.println("Enter Id 3:\n");
-                    int adminInputId3 = new Scanner(System.in).nextInt(); //input ID 3
+                    //input ID 3
+                    int adminInputId3 = new Scanner(System.in).nextInt(); 
                     
         if (customerArl.isEmpty())
         {
             System.out.println("You have no customer yet,so no winner.\n");
         }
-        else //generating 6 random IDs from the databse already present
+        //generating 6 random IDs from the databse already present
+        else 
         {
-            ArrayList <Integer> sixNumberArl = new ArrayList<>(); //storing the 6 randomly generated IDs
+            //storing the 6 randomly generated IDs
+            ArrayList <Integer> sixNumberArl = new ArrayList<>(); 
             for (int sixNumberArlIndex=0;sixNumberArlIndex<6;sixNumberArlIndex++)
             {
                 sixNumberArl.add((int)(Math.random()*customerArl.size()+1));
             }
 
-            ArrayList <Integer> winnersArl = new ArrayList<>(); //arraylist for adding winners IDs, if any
+            //arraylist for adding winners IDs, if any
+            ArrayList <Integer> winnersArl = new ArrayList<>(); 
             if ( sixNumberArl.contains(adminInputId1))
             {
                 winnersArl.add(adminInputId1);
