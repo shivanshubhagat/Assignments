@@ -1,6 +1,8 @@
 //Main class that will drive all the functions and classes. 
 //Contains single main method with switch case UI.
 
+import entity.Admin;
+import entity.Customer;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
