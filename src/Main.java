@@ -6,8 +6,11 @@ import java.util.Scanner;
 
 public class Main 
 {
-    public static void main(String[] args) //Main function to call all the classes.
-    {   boolean switchFlag = false; //when turned true, the switch statement will break.
+    //Main function to call all the classes.
+    public static void main(String[] args) 
+    {   
+        //when turned true, the switch statement will break.
+        boolean switchFlag = false; 
         do
         {
             System.out.println("1. Add New Customer. ");
@@ -16,11 +19,14 @@ public class Main
             System.out.println("4. Search Customer by ID. ");
             System.out.println("5. Generate Prizes. ");
             System.out.println("6. Exit.");
-            Scanner sc = new Scanner(System.in); //input variable for scanner class
-            int choice = 0 ; //variable for switch case choice
+            //input variable for scanner class
+            Scanner sc = new Scanner(System.in); 
+            //variable for switch case choice
+            int choice = 0 ; 
             try
             {
-               int userInput = sc.nextInt(); //temporary variable to verify the switch case input 
+                //temporary variable to verify the switch case input 
+                int userInput = sc.nextInt(); 
                 if (userInput>=1 && userInput<=6)
                 {
                   choice = userInput;  
@@ -33,16 +39,20 @@ public class Main
                 System.out.println("\nPlease enter a valid choice.\n ");
             }
             
-            Admin admin = new Admin(); //new admin object in which further respective methods are called
+            //new admin object in which further respective methods are called
+            Admin admin = new Admin(); 
             switch (choice) 
             {        
                 case 1:
-                    String customerName = ""; //name of the customer
+                    //name of the customer
+                    String customerName = ""; 
                     System.out.println("Enter Name of Customer. ");
                     do 
                     {
-                        String nameInput = sc.next(); //temporary variable for verification
-                        if (!nameInput.matches("[a-zA-Z_]+")) //regex code for varification
+                        //temporary variable for verification
+                        String nameInput = sc.next(); 
+                        //regex code for varification
+                        if (!nameInput.matches("[a-zA-Z_]+")) 
                         {
                             System.out.println("Name can not contain digits. "
                                     + "Please enter a Valid name. ");
@@ -52,22 +62,28 @@ public class Main
                     }
                     while(customerName.isEmpty());
                     
-                    Customer customer = new Customer(customerName); //new customer object in which further respective functions are called
-                    int customerId = admin.addNewCustomer(customer); //the function returns the id of customer which is stored here
+                    //new customer object in which further respective functions are called
+                    Customer customer = new Customer(customerName); 
+                    //the function returns the id of customer which is stored here
+                    int customerId = admin.addNewCustomer(customer); 
 
                     System.out.println("Enter Car Details: ");
-                    admin.enterCarDetails(customerId,customer); //function to add car details to customer
+                    //function to add car details to customer
+                    admin.enterCarDetails(customerId,customer); 
 
                     System.out.println("\nDetails added.");
                     break;
 
                 case 2:
                     System.out.println("Enter the Customer ID.");
-                    int customerIdInput = sc.nextInt(); //non verified input for customer ID
-                    if(customerIdInput<=admin.customerArl.size()) //verification of ID
+                    //non verified input for customer ID
+                    int customerIdInput = sc.nextInt(); 
+                    //verification of ID
+                    if(customerIdInput<=admin.customerArl.size()) 
                     {
                         System.out.println("Customer found");
-                        admin.enterCarDetails(customerIdInput, admin.customerArl.get(customerIdInput-1)); //input details of car
+                        //input details of car
+                        admin.enterCarDetails(customerIdInput, admin.customerArl.get(customerIdInput-1)); 
                         System.out.println("Details added.\n");
                     }
                     else
@@ -75,15 +91,18 @@ public class Main
                     break;
 
                 case 3:
-                    admin.showNameSortedDatabase(); //show the database of all customers sorted by the name of customer
+                    //show the database of all customers sorted by the name of customer
+                    admin.showNameSortedDatabase(); 
                     break;
                     
                 case 4:
-                    int idVerified = 0; //intialize variable for verified Customer ID
+                     //intialize variable for verified Customer ID
+                    int idVerified = 0;
                     System.out.println("Enter the ID.");
                     do 
                     {
-                        String idInput = sc.next(); //non verified ID variable
+                        //non verified ID variable
+                        String idInput = sc.next(); 
                         if (idInput.matches("[a-zA-Z_]+")) //verification of ID
                         {
                             System.out.println("ID can not contain alphabets. Please enter a Valid ID. ");
@@ -96,14 +115,16 @@ public class Main
                             idVerified = Integer.parseInt(idInput); //assigning value of verified ID
                     }
                     while(idVerified==0);
-                    admin.searchById(idVerified); //method to search customer by ID
+                    //method to search customer by ID
+                    admin.searchById(idVerified); 
                     break;
                 case 5:
                     while (true)
                             {
                                 try
                                 {
-                                    admin.generatePrizes(); //method to generate prizes
+                                    //method to generate prizes
+                                    admin.generatePrizes(); 
                                     break;
                                 }
                                 catch (InputMismatchException e)
@@ -113,13 +134,15 @@ public class Main
                             }
                     break;        
                 case 6:
-                    System.out.println("Thank You"); //EXIT case
+                    //EXIT case
+                    System.out.println("Thank You"); 
                     switchFlag = true;
                     break;
             }
                 
         }
-            while (switchFlag==false); //Loop for switch statement
+            //Loop for switch statement
+            while (switchFlag==false); 
     }
 }    
 
